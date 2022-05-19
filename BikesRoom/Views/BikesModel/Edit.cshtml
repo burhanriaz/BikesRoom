@@ -1,0 +1,36 @@
+﻿@model BikeRoom.Models.BikeModelViewModel.BikeModelVM;
+@using BikesRoom.Extentions
+<h1> Edit Bikes Model</h1>
+<form method="post" action="Edit">
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="MakedByCompany"></label>
+        </div>
+
+        <div class="col-4">
+            <select asp-for="BikesModel.MakedByFk"  asp-items="Model.MakedByCompany.ToSelectListItem()" class="form-control">
+                @*<option>Select Brand Name</option>*@
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+
+        <div class="col-2">
+            <label asp-for="BikesModel.Name"></label>
+        </div>
+
+        <div class="col-4">
+            <input class="form-control" asp-for="BikesModel.Name" />
+        </div>
+        <input type="hidden" asp-for="BikesModel.Id "/>
+    </div>
+    <br />
+   
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Update" />
+        <a asp-action="Index" class="btn btn-danger">Back</a>
+    </div>
+
+</form>

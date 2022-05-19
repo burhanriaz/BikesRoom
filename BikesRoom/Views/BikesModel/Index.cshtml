@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BikeRoom.Models.BikesModel>
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Model Of Vahicals</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-info" asp-action="Create">Add new Bike Model</a>
+    </div>
+    <br />  <br />
+    <div class="col-12 ">
+
+        <table class="table table-striped  border">
+            <tr class="table-info">
+                <th class="col-4">
+                    @*@Html.DisplayNameFor(m=>m.MakedByCompany)*@
+                    Company Name
+                </th>
+                <th class=" col-3">
+                    @*@Html.DisplayNameFor(m=>m.Name)*@
+                    Bike Model
+                </th>
+
+                <th class="col-4">
+
+                    Action
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m=>item.MakedByCompany.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>item.Name)
+                    </td>
+                 
+                        <partial name="_TableButtonPartial" model="item.Id" />
+                    
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
