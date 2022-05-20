@@ -3,9 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using BikeRoom.DataContext;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using BikesRoom.Helper;
 
 namespace BikeRoom.Controllers
 {
+    //  [Authorize(Roles = "Admin,Executive")]
+    [Authorize(Roles = Constant.Admin +","+ Constant.Executive)]
+
+    //how to pass role using constan class or hleper class
     public class MakedByCompanyController : Controller
     {
         private readonly AppDbContext _appDbContext;
@@ -66,7 +72,7 @@ namespace BikeRoom.Controllers
             var Data = await _appDbContext.MakedByCompanys.FindAsync(id);
             if (Data != null)
             {
-            return View(Data);
+                return View(Data);
             }
             return NotFound();
 

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BikesRoom.Helper
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,18 +24,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Master
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-controller="MakedByCompany" asp-action="Index">Makes New</a></li>
-                                <li><a class="dropdown-item" asp-controller="BikesModel" asp-action="Index">Bike Model</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.IsInRole(Constant.Admin) || User.IsInRole(Constant.Executive))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Master
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-controller="MakedByCompany" asp-action="Index">Makes New</a></li>
+                                    <li><a class="dropdown-item" asp-controller="BikesModel" asp-action="Index">Bike Model</a></li>
+                                    @if(User.IsInRole(Constant.Admin))
+                                    {
+                                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register"> Add New User </a></li>
+                                        
+                                    }
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial"/>
                 </div>

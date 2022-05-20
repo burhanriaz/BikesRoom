@@ -35,8 +35,9 @@ namespace BikesRoom
             });
             services.AddDbContext<AppDbContext>
               (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddIdentity<IdentityUser,IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>().AddDefaultUI().AddDefaultTokenProviders();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -4,14 +4,16 @@ using BikeRoom.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BikesRoom.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220519114649_Add_office_phone_Number")]
+    partial class Add_office_phone_Number
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,46 +53,6 @@ namespace BikesRoom.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MakedByCompanys");
-                });
-
-            modelBuilder.Entity("BikesRoom.Models.Bikes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BikesModelId");
-
-                    b.Property<int>("Currency");
-
-                    b.Property<string>("Email")
-                        .IsRequired();
-
-                    b.Property<string>("Feature");
-
-                    b.Property<string>("ImagePath");
-
-                    b.Property<int>("MakedByCompanyId");
-
-                    b.Property<int>("Mileage");
-
-                    b.Property<string>("Phone")
-                        .IsRequired();
-
-                    b.Property<int>("Price");
-
-                    b.Property<string>("SellerName")
-                        .IsRequired();
-
-                    b.Property<DateTime>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BikesModelId");
-
-                    b.HasIndex("MakedByCompanyId");
-
-                    b.ToTable("Bikes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -215,9 +177,11 @@ namespace BikesRoom.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -248,9 +212,11 @@ namespace BikesRoom.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
@@ -275,19 +241,6 @@ namespace BikesRoom.Migrations
                     b.HasOne("BikeRoom.Models.MakedByCompany", "MakedByCompany")
                         .WithMany()
                         .HasForeignKey("MakedByFk")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BikesRoom.Models.Bikes", b =>
-                {
-                    b.HasOne("BikeRoom.Models.BikesModel", "BikesModel")
-                        .WithMany()
-                        .HasForeignKey("BikesModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BikeRoom.Models.MakedByCompany", "MakedByCompany")
-                        .WithMany()
-                        .HasForeignKey("MakedByCompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

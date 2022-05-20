@@ -1,5 +1,7 @@
 ﻿using BikeRoom.DataContext;
 using BikeRoom.Models.BikeModelViewModel;
+using BikesRoom.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace BikeRoom.Controllers
 {
+    // [Authorize(Roles = "Admin,Executive")]
+
+    [Authorize(Roles = Constant.Admin + "," + Constant.Executive)]
+
     public class BikesModelController : Controller
     {
 
@@ -111,19 +117,19 @@ namespace BikeRoom.Controllers
 
         public async Task<IActionResult> DeletePost(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
-          
-           var model =await _appDbContext.BikesModels.FindAsync(bikeModelVM.BikesModel.Id);
-            if(model != null)
+
+            var model = await _appDbContext.BikesModels.FindAsync(id);
+            if (model != null)
             {
                 _appDbContext.BikesModels.Remove(model);
                 await _appDbContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return  NotFound(); 
+            return NotFound();
         }
     }
 }
