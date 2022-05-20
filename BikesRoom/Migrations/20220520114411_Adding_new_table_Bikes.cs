@@ -62,13 +62,13 @@ namespace BikesRoom.Migrations
                         column: x => x.BikesModelId,
                         principalTable: "BikesModels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Bikes_MakedByCompanys_MakedByCompanyId",
                         column: x => x.MakedByCompanyId,
                         principalTable: "MakedByCompanys",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

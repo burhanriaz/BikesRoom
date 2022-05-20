@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BikesRoom.Models.Bikes>
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Bikes</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-info" asp-action="Create">Add Bike</a>
+    </div>
+    <br />  <br />
+    <div class="col-12 ">
+
+        <table class="table table-striped  border">
+            <tr class="table-info">
+                <th >
+                    @*@Html.DisplayNameFor(m=>m.MakedByCompany)*@
+                    Bike Photo 
+                </th>
+                <th >
+                    @*@Html.DisplayNameFor(m=>m.Name)*@
+                    Bike Details
+                </th>
+
+                <th >
+                    Price
+                </th>
+                 <th >
+                    Seller Information
+                </th>
+                <th class="col-4">
+                    Action
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                       <img src="@Html.DisplayFor(m=>item.ImagePath)" width="150px" height="100px" /> 
+                    </td>
+                       <td>
+                        @Html.DisplayFor(m=>item.MakedByCompany.Name)
+                    </td>
+                          <td>
+                        @Html.DisplayFor(m=>item.MakedByCompany.Name)
+                    </td>
+                    
+                            <td>
+                        @Html.DisplayFor(m=>item.BikesModel.Name)
+                    </td>
+                 
+                    <td>
+                        @Html.DisplayFor(m=>item.SellerName)
+                    </td>
+                            <td>
+                        @Html.DisplayFor(m=>item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>item.Phone)
+                    </td>
+                 
+                        <partial name="_TableButtonPartial" model="item.Id" />
+                    
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

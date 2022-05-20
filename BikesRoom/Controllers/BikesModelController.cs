@@ -29,8 +29,6 @@ namespace BikeRoom.Controllers
 
             bikeModelVM = new BikeModelVM()
             {
-
-
                 MakedByCompany = _appDbContext.MakedByCompanys.ToList(),
                 BikesModel = new Models.BikesModel()
             };
