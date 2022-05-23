@@ -11,6 +11,7 @@
             <select asp-for="BikesModel.MakedByFk"  asp-items="Model.MakedByCompany.ToSelectListItem()" class="form-control">
                 <option>Select Brand Name</option>
             </select>
+            <span asp-validation-for="BikesModel.MakedByFk" class="text-danger"></span>
         </div>
     </div>
 
@@ -22,6 +23,9 @@
 
         <div class="col-4">
             <input class="form-control" asp-for="BikesModel.Name" />
+            <span asp-validation-for="BikesModel.Name" class="text-danger"></span>
+
+
         </div>
     </div>
     <br />

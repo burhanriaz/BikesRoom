@@ -15,7 +15,7 @@ using BikesRoom.Helper;
 namespace BikesRoom.Areas.Identity.Pages.Account
 {
    // [AllowAnonymous]
-    [Authorize(Roles =Constant.Admin)]
+ //   [Authorize(Roles =Constant.Admin)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

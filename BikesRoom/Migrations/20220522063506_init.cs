@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BikesRoom.Migrations
 {
-    public partial class Add_Identity_Tables : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,9 @@ namespace BikesRoom.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    PhoneNumber2 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +55,7 @@ namespace BikesRoom.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 255, nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,8 +108,8 @@ namespace BikesRoom.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -151,8 +153,8 @@ namespace BikesRoom.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -172,7 +174,7 @@ namespace BikesRoom.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 255, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     MakedByFk = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -184,6 +186,41 @@ namespace BikesRoom.Migrations
                         principalTable: "MakedByCompanys",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BikesModelId = table.Column<int>(nullable: false),
+                    MakedByCompanyId = table.Column<int>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Mileage = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    Feature = table.Column<string>(nullable: true),
+                    SellerName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Phone = table.Column<string>(nullable: false),
+                    Currency = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bikes_BikesModels_BikesModelId",
+                        column: x => x.BikesModelId,
+                        principalTable: "BikesModels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Bikes_MakedByCompanys_MakedByCompanyId",
+                        column: x => x.MakedByCompanyId,
+                        principalTable: "MakedByCompanys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,6 +263,16 @@ namespace BikesRoom.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bikes_BikesModelId",
+                table: "Bikes",
+                column: "BikesModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bikes_MakedByCompanyId",
+                table: "Bikes",
+                column: "MakedByCompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BikesModels_MakedByFk",
                 table: "BikesModels",
                 column: "MakedByFk");
@@ -249,13 +296,16 @@ namespace BikesRoom.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BikesModels");
+                name: "Bikes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BikesModels");
 
             migrationBuilder.DropTable(
                 name: "MakedByCompanys");

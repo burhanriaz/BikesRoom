@@ -29,7 +29,7 @@ namespace BikesRoom.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -46,7 +46,7 @@ namespace BikesRoom.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -61,7 +61,7 @@ namespace BikesRoom.Migrations
 
                     b.Property<int>("BikesModelId");
 
-                    b.Property<int>("Currency");
+                    b.Property<string>("Currency");
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -82,7 +82,7 @@ namespace BikesRoom.Migrations
                     b.Property<string>("SellerName")
                         .IsRequired();
 
-                    b.Property<DateTime>("Year");
+                    b.Property<int>("Year");
 
                     b.HasKey("Id");
 

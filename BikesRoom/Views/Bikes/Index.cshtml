@@ -12,19 +12,19 @@
 
         <table class="table table-striped  border">
             <tr class="table-info">
-                <th >
+                <th>
                     @*@Html.DisplayNameFor(m=>m.MakedByCompany)*@
-                    Bike Photo 
+                    Bike Photo
                 </th>
-                <th >
+                <th>
                     @*@Html.DisplayNameFor(m=>m.Name)*@
                     Bike Details
                 </th>
 
-                <th >
+                <th>
                     Price
                 </th>
-                 <th >
+                <th>
                     Seller Information
                 </th>
                 <th class="col-4">
@@ -36,31 +36,25 @@
             {
                 <tr>
                     <td>
-                       <img src="@Html.DisplayFor(m=>item.ImagePath)" width="150px" height="100px" /> 
-                    </td>
-                       <td>
-                        @Html.DisplayFor(m=>item.MakedByCompany.Name)
-                    </td>
-                          <td>
-                        @Html.DisplayFor(m=>item.MakedByCompany.Name)
-                    </td>
-                    
-                            <td>
-                        @Html.DisplayFor(m=>item.BikesModel.Name)
-                    </td>
-                 
-                    <td>
-                        @Html.DisplayFor(m=>item.SellerName)
-                    </td>
-                            <td>
-                        @Html.DisplayFor(m=>item.Email)
+                        <img src="@Html.DisplayFor(m=>item.ImagePath)" width="150px" height="100px" />
                     </td>
                     <td>
-                        @Html.DisplayFor(m=>item.Phone)
+                        <b> @Html.DisplayFor(m=>item.MakedByCompany.Name) (@Html.DisplayFor(m=>item.Year)) </b> <br />
+                        <b>Model:   </b>@Html.DisplayFor(m=>item.BikesModel.Name)<br />
+                        <b>Mileage: </b> @Html.DisplayFor(m=>item.Mileage)
                     </td>
-                 
-                        <partial name="_TableButtonPartial" model="item.Id" />
-                    
+
+                    <td>
+                        @Html.DisplayFor(m=>item.Price)  (@Html.DisplayFor(m=>item.Currency))
+                    <td>
+                        <b>Name:   </b>@Html.DisplayFor(m=>item.SellerName)<br />
+                        <b>Email:   </b>@Html.DisplayFor(m=>item.Email)<br />
+                        <b>Phone: </b> @Html.DisplayFor(m=>item.Phone)
+                    </td>
+
+
+                    <partial name="_TableButtonPartial" model="item.Id" />
+
                 </tr>
             }
 

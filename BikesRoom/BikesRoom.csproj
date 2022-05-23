@@ -29,12 +29,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Migrations\20181222104631_AddModelandMaketoDb.cs" />
-		<Compile Remove="Migrations\20181222104631_AddModelandMaketoDb.Designer.cs" />
-		<Compile Remove="Migrations\20181226234241_AddModelandMaketoDb.cs" />
-		<Compile Remove="Migrations\20181226234241_AddModelandMaketoDb.Designer.cs" />
-		<Compile Remove="Migrations\20181226234340_AddModelandMaketoDb.cs" />
-		<Compile Remove="Migrations\20181226234340_AddModelandMaketoDb.Designer.cs" />
+	  <Compile Remove="wwwroot\Files\**" />
+	  <Content Remove="wwwroot\Files\**" />
+	  <EmbeddedResource Remove="wwwroot\Files\**" />
+	  <None Remove="wwwroot\Files\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,6 +60,7 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Identity\Services\" />
+		<Folder Include="Models\ImgVM\" />
 	</ItemGroup>
 
 </Project>

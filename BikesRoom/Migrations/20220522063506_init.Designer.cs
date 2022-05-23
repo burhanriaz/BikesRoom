@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikesRoom.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220519105109_init_In_New_DataBase")]
-    partial class init_In_New_DataBase
+    [Migration("20220522063506_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace BikesRoom.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -48,11 +48,51 @@ namespace BikesRoom.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255);
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.ToTable("MakedByCompanys");
+                });
+
+            modelBuilder.Entity("BikesRoom.Models.Bikes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BikesModelId");
+
+                    b.Property<string>("Currency");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Feature");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<int>("MakedByCompanyId");
+
+                    b.Property<int>("Mileage");
+
+                    b.Property<string>("Phone")
+                        .IsRequired();
+
+                    b.Property<int>("Price");
+
+                    b.Property<string>("SellerName")
+                        .IsRequired();
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BikesModelId");
+
+                    b.HasIndex("MakedByCompanyId");
+
+                    b.ToTable("Bikes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -109,6 +149,9 @@ namespace BikesRoom.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -148,6 +191,8 @@ namespace BikesRoom.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -172,11 +217,9 @@ namespace BikesRoom.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -207,11 +250,9 @@ namespace BikesRoom.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -220,11 +261,35 @@ namespace BikesRoom.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BikesRoom.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("PhoneNumber2");
+
+                    b.ToTable("ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("BikeRoom.Models.BikesModel", b =>
                 {
                     b.HasOne("BikeRoom.Models.MakedByCompany", "MakedByCompany")
                         .WithMany()
                         .HasForeignKey("MakedByFk")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BikesRoom.Models.Bikes", b =>
+                {
+                    b.HasOne("BikeRoom.Models.BikesModel", "BikesModel")
+                        .WithMany()
+                        .HasForeignKey("BikesModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BikeRoom.Models.MakedByCompany", "MakedByCompany")
+                        .WithMany()
+                        .HasForeignKey("MakedByCompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
