@@ -38,7 +38,7 @@
 	<ItemGroup>
 		<PackageReference Include="Automapper" Version="9.0.0" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-		<PackageReference Include="cloudscribe.Pagination.Models" Version="1.0.5" />
+		<PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
 		<PackageReference Include="cloudscribe.Web.Pagination" Version="2.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
 		<PackageReference Include="Microsoft.AspNetCore.App" />

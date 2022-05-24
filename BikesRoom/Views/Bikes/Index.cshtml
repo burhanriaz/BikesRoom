@@ -1,4 +1,13 @@
-﻿@model IEnumerable<BikesRoom.Models.Bikes>
+﻿@using BikesRoom.Models
+@*@model IEnumerable<BikesRoom.Models.Bikes>*@
+@model cloudscribe.Pagination.Models.PagedResult<Bikes>
+@{
+     ViewData["Controler"]="Bikes";
+    ViewData["Action"]="Index";
+
+}
+   
+
 
 <div class="row">
     <div class="col-6">
@@ -32,7 +41,7 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Data)
             {
                 <tr>
                     <td>
@@ -59,5 +68,19 @@
             }
 
         </table>
+
+        <partial name="_partialPagination" view-data="ViewData" model="Model"/>
+       @* <cs-pager cs-paging-pagenumber=(int)Model.PageNumber
+                  cs-paging-totalitems=(int)Model.TotalItems
+                  cs-paging-pagesize=Model.PageSize
+                  cs-pagenumber-param="pageNumber"
+                  asp-controller="Bikes"
+                  asp-action="Index"
+                  cs-pager-li-current-class="page-item active"
+                  cs-pager-li-other-class="page-item"
+                  cs-pager-li-non-active-class="page-item disabled"
+                  cs-pager-link-current-class="page-link"
+                  cs-pager-link-other-class="page-link"></cs-pager>*@
+
     </div>
 </div>

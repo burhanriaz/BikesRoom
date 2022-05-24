@@ -13,6 +13,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using BikeRoom.Models;
+using cloudscribe.Pagination.Models;
 
 namespace BikeRoom.Controllers
 {
@@ -48,11 +49,26 @@ namespace BikeRoom.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index1()
         {
             var model = _appDbContext.Bikes.Include(m => m.MakedByCompany).Include(y => y.BikesModel);
 
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult Index(int pageNumber=1,int pageSize=3)
+        {
+            var Exclude = (pageNumber * pageSize) - pageSize;
+            var model = _appDbContext.Bikes.Include(m => m.MakedByCompany).Include(y => y.BikesModel)
+                .Skip(Exclude).Take(pageSize);
+            var result = new PagedResult<Bikes>
+            { Data = model.AsNoTracking().ToList(),
+                TotalItems = _appDbContext.Bikes.Count(),
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            };
+
+            return View(result);
         }
 
         [HttpGet]
