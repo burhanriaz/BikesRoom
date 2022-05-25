@@ -1,19 +1,61 @@
 ﻿@model BikesRoom.Models.BikeModelViewModel.BikesViewModel;
 @using BikesRoom.Extentions
-<h1> Update Model Bikes</h1>
+
+<script>
+
+    $(document).ready (function(){
+        var MakeByCompanyDDL =$("#MakeByCompany");
+        var BikesModelDDL =$("#BikesModel");
+       // BikesModelDDL.attr('disabled',true);
+
+        MakeByCompanyDDL.change(function(){
+
+            if ($(this).val()=="0"){
+                console.log("0",$(this).val())
+                BikesModelDDL.attr('disabled',true);
+                BikesModelDDL.val("0");
+            }
+            else{
+                console.log("not zero",$(this).val())
+
+
+                   $.ajax({
+                       url: "api/BikesModel/"+$(this).val(),
+                       method: "get",
+                       success: function(data){
+                           BikesModelDDL.attr('disabled',false);
+                           BikesModelDDL.empty();
+                           BikesModelDDL.append($('<option/>',{value:'0',text:'---Select Item---' }));
+                            console.log(data);
+                           $(data).each(function (index,item){
+
+                                console.log("success:");
+
+                               BikesModelDDL.append($('<option/>',{value:item.id,text:item.name }));
+                                console.log("success:");
+                           });
+
+                       }
+                   });
+            }
+        });
+
+    });
+
+</script>
+<h1> Update Bikes</h1>
 
 <form method="post" action="Edit" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Bikes.Id" />
-    <input type="hidden" asp-for="Bikes.ImagePath" />
-
     <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="Bikes.Id"/>
+    <input type="hidden" asp-for="Bikes.ImagePath"/>
 
     <div class="form-group row">
         <div class="col-2">
             <label asp-for="Bikes.MakedByCompany"></label>
         </div>
         <div class="col-4">
-            <select asp-for="Bikes.MakedByCompanyId" asp-items="@Model.MakedByCompany.ToSelectListItem()" class="form-control">
+            <select asp-for="Bikes.MakedByCompanyId" asp-items="@Model.MakedByCompany.ToSelectListItem()" class="form-control" id="MakeByCompany">
                 @*<option>Select Brand Name</option>*@
             </select>
             <span asp-validation-for="Bikes.MakedByCompanyId" class="text-danger"></span>
@@ -22,20 +64,21 @@
             <label asp-for="Bikes.ImagePath"></label>
         </div>
         <div class="col-4">
-            
-            <input type="file"  asp-for="Bikes.ImagePath" class="form-control" />
-
+            <input type="file" asp-for="Bikes.ImagePath" class="form-control" />
             <span asp-validation-for="Bikes.ImagePath" class="text-danger"></span>
+           
             <img src="@Html.DisplayFor(m=>Model.Bikes.ImagePath)" width="150px" height="100px" />
 
+        
         </div>
+       
     </div>
     <div class="form-group row">
         <div class="col-2">
             <label asp-for="Bikes.BikesModel"></label>
         </div>
         <div class="col-4">
-            <select asp-for="Bikes.BikesModelId" asp-items="@Model.BikesModel.ToSelectListItem()" class="form-control">
+            <select asp-for="Bikes.BikesModelId" asp-items="@Model.BikesModel.ToSelectListItem()" class="form-control" id="BikesModel">
                 @*<option>Select Model Name</option>*@
             </select>
             <span asp-validation-for="Bikes.BikesModelId" class="text-danger"></span>
@@ -123,7 +166,8 @@
     </div>
     <br />
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Update" asp-route-id="@Model.Bikes.Id" />
+        <input type="submit" class="btn btn-primary" value="Update" />
         <a asp-action="Index" class="btn btn-danger">Back</a>
     </div>
 </form>
+

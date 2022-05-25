@@ -1,44 +1,67 @@
 ﻿@using BikesRoom.Models
 @*@model IEnumerable<BikesRoom.Models.Bikes>*@
 @model cloudscribe.Pagination.Models.PagedResult<Bikes>
+@using BikesRoom.Helper;
 @{
-     ViewData["Controler"]="Bikes";
-    ViewData["Action"]="Index";
+    ViewData["Controler"] = "Bikes";
+    ViewData["Action"] = "Index";
 
 }
-   
-
-
+<form asp-action="Index" method="get">
+    <div>
+        <p>
+            <input type="text" name="SearchString" value="@ViewBag.CurrentFilter" />
+            <input type="submit" class="btn btn-info" value="Search" />
+            <a asp-action="Index"> | Remove Filter</a>
+        </p>
+    </div>
+</form>
 <div class="row">
     <div class="col-6">
         <h2 class="text-info">Bikes</h2>
     </div>
-    <div class="col-6 text-end">
-        <a class="btn btn-info" asp-action="Create">Add Bike</a>
-    </div>
+    @if (User.IsInRole(Constant.Admin) || User.IsInRole(Constant.Executive))
+    {
+        <div class="col-6 text-end">
+            <a class="btn btn-info" asp-action="Create">Add Bike</a>
+        </div>
+    }
+
     <br />  <br />
-    <div class="col-12 ">
+    <div class="col-12">
 
         <table class="table table-striped  border">
             <tr class="table-info">
-                <th>
+                <th class="col-auto">
                     @*@Html.DisplayNameFor(m=>m.MakedByCompany)*@
                     Bike Photo
                 </th>
-                <th>
+                <th class="col-auto">
                     @*@Html.DisplayNameFor(m=>m.Name)*@
                     Bike Details
                 </th>
 
-                <th>
-                    Price
+                <th class="col-auto">
+                    <a asp-action="Index"
+                       asp-route-SortOrder="@ViewBag.PriceSortParam"
+                       asp-route-PageNumber=@Model.PageNumber>Price</a>
                 </th>
-                <th>
+                <th class="col-auto">
                     Seller Information
                 </th>
-                <th class="col-4">
-                    Action
-                </th>
+                @if (User.IsInRole(Constant.Admin) || User.IsInRole(Constant.Executive))
+                {
+                    <th class="col-auto">
+                        Action
+                    </th>
+                }
+                else
+                {
+                    <th class="col-auto">
+                        View Details
+                    </th>
+                }
+
             </tr>
 
             @foreach (var item in Model.Data)
@@ -61,26 +84,41 @@
                         <b>Phone: </b> @Html.DisplayFor(m=>item.Phone)
                     </td>
 
+                        @if (User.IsInRole(Constant.Admin) || User.IsInRole(Constant.Executive))
+                        {
+                        <partial name="_TableButtonPartial" model="item.Id" />
+                        }
+                        else
+                        {
 
-                    <partial name="_TableButtonPartial" model="item.Id" />
+                        <td class="align-items-md-center">
+                            <div class="btn-group" role="group">
+                                <a asp-route-id=@item.Id asp-action="View" type="button" class="btn btn-primary">
+                                    <i class="fas fa-search-plus"></i>&nbsp;View
+                                </a>
+
+                            </div>
+                        </td>
+                        }
+
 
                 </tr>
             }
 
         </table>
 
-        <partial name="_partialPagination" view-data="ViewData" model="Model"/>
-       @* <cs-pager cs-paging-pagenumber=(int)Model.PageNumber
-                  cs-paging-totalitems=(int)Model.TotalItems
-                  cs-paging-pagesize=Model.PageSize
-                  cs-pagenumber-param="pageNumber"
-                  asp-controller="Bikes"
-                  asp-action="Index"
-                  cs-pager-li-current-class="page-item active"
-                  cs-pager-li-other-class="page-item"
-                  cs-pager-li-non-active-class="page-item disabled"
-                  cs-pager-link-current-class="page-link"
-                  cs-pager-link-other-class="page-link"></cs-pager>*@
+        <partial name="_partialPagination" view-data="ViewData" model="Model" />
+        @* <cs-pager cs-paging-pagenumber=(int)Model.PageNumber
+            cs-paging-totalitems=(int)Model.TotalItems
+            cs-paging-pagesize=Model.PageSize
+            cs-pagenumber-param="pageNumber"
+            asp-controller="Bikes"
+            asp-action="Index"
+            cs-pager-li-current-class="page-item active"
+            cs-pager-li-other-class="page-item"
+            cs-pager-li-non-active-class="page-item disabled"
+            cs-pager-link-current-class="page-link"
+            cs-pager-link-other-class="page-link"></cs-pager>*@
 
     </div>
 </div>

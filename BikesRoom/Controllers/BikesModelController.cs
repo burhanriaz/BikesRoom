@@ -15,7 +15,7 @@ namespace BikeRoom.Controllers
 {
     // [Authorize(Roles = "Admin,Executive")]
 
-    //  [Authorize(Roles = Constant.Admin + "," + Constant.Executive)]
+    [Authorize(Roles = Constant.Admin + "," + Constant.Executive)]
 
     public class BikesModelController : Controller
     {

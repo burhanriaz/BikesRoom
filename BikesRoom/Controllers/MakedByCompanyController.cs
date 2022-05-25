@@ -8,10 +8,11 @@ using BikesRoom.Helper;
 
 namespace BikeRoom.Controllers
 {
-    //  [Authorize(Roles = "Admin,Executive")]
+    //  [Authorize(Roles = "Admin,Executive")] 
+    //how to pass role using constan class or hleper class
+
     [Authorize(Roles = Constant.Admin +","+ Constant.Executive)]
 
-    //how to pass role using constan class or hleper class
     public class MakedByCompanyController : Controller
     {
         private readonly AppDbContext _appDbContext;

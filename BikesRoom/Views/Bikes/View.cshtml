@@ -1,0 +1,117 @@
+﻿@model BikesRoom.Models.BikeModelViewModel.BikesViewModel;
+@using BikesRoom.Extentions
+
+
+<h1>Bike Details</h1>
+
+<form >
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.MakedByCompany"></label>
+        </div>
+        <div class="col-4">
+            <select disabled asp-for="Bikes.MakedByCompanyId" asp-items="@Model.MakedByCompany.ToSelectListItem()" class="form-control" id="MakeByCompany">
+               
+            </select>
+        </div>
+        <div class="col-1">
+            <label></label>
+        </div>
+        <div class="col-4">
+            <input disabled  asp-for="Bikes.ImagePath"value="Picture" class="form-control" />
+          
+            <img src="@Html.DisplayFor(m=>Model.Bikes.ImagePath)" width="150px" height="100px" />
+
+        
+        </div>
+       
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.BikesModel"></label>
+        </div>
+        <div class="col-4">
+            <select disabled asp-for="Bikes.BikesModelId" asp-items="@Model.BikesModel.ToSelectListItem()" class="form-control" id="BikesModel">
+                @*<option>Select Model Name</option>*@
+            </select>
+         
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Year"></label>
+        </div>
+        <div class="col-4">
+            <input disabled textmode="Date" class="form-control" asp-for="Bikes.Year" />
+          
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Mileage"></label>
+        </div>
+        <div class="col-4">
+            <input disabled class="form-control" asp-for="Bikes.Mileage" />
+         
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Price"></label>
+        </div>
+        <div class="col-4">
+            <input disabled class="form-control" asp-for="Bikes.Price" />
+         
+        </div>
+        <div class="col-1">
+            <label asp-for="Bikes.Currency"></label>
+        </div>
+        <div class="col-4">
+            <select disabled asp-for="Bikes.Currency" asp-items="@Model.Currencies.ToSelectListItem()" class="form-control">
+            </select>
+           
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Feature"></label>
+        </div>
+        <div class="col-4">
+            <textarea disabled class="form-control" asp-for="Bikes.Feature"> </textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.SellerName"></label>
+        </div>
+        <div class="col-4">
+            <input disabled class="form-control" asp-for="Bikes.SellerName" />
+         
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Email"></label>
+        </div>
+        <div class="col-4">
+            <input disabled class="form-control" asp-for="Bikes.Email" />
+           
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Bikes.Phone"></label>
+        </div>
+        <div class="col-4">
+            <input disabled class="form-control" asp-for="Bikes.Phone" />
+         
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <a asp-action="Index" class="btn btn-danger">Back</a>
+    </div>
+</form>
+
